@@ -1,0 +1,11 @@
+C:\Users\clent\Desktop\SQL SERVER PRACTICE\CARRITO\CursoMvc\CapaNegocio\bin\Debug\CapaNegocio.dll
+C:\Users\clent\Desktop\SQL SERVER PRACTICE\CARRITO\CursoMvc\CapaNegocio\bin\Debug\CapaNegocio.pdb
+C:\Users\clent\Desktop\SQL SERVER PRACTICE\CARRITO\CursoMvc\CapaNegocio\bin\Debug\CapaDatos.dll
+C:\Users\clent\Desktop\SQL SERVER PRACTICE\CARRITO\CursoMvc\CapaNegocio\bin\Debug\CapaEntidad.dll
+C:\Users\clent\Desktop\SQL SERVER PRACTICE\CARRITO\CursoMvc\CapaNegocio\bin\Debug\CapaDatos.pdb
+C:\Users\clent\Desktop\SQL SERVER PRACTICE\CARRITO\CursoMvc\CapaNegocio\bin\Debug\CapaEntidad.pdb
+C:\Users\clent\Desktop\SQL SERVER PRACTICE\CARRITO\CursoMvc\CapaNegocio\obj\Debug\CapaNegocio.csproj.AssemblyReference.cache
+C:\Users\clent\Desktop\SQL SERVER PRACTICE\CARRITO\CursoMvc\CapaNegocio\obj\Debug\CapaNegocio.csproj.CoreCompileInputs.cache
+C:\Users\clent\Desktop\SQL SERVER PRACTICE\CARRITO\CursoMvc\CapaNegocio\obj\Debug\CapaNegocio.csproj.CopyComplete
+C:\Users\clent\Desktop\SQL SERVER PRACTICE\CARRITO\CursoMvc\CapaNegocio\obj\Debug\CapaNegocio.dll
+C:\Users\clent\Desktop\SQL SERVER PRACTICE\CARRITO\CursoMvc\CapaNegocio\obj\Debug\CapaNegocio.pdb
