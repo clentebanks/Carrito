@@ -15,7 +15,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-12">
-                <button type="button" class="btn btn-success" onclick="abriModal()">Crear Nuevo</button>
+                <button type="button" class="btn btn-success" onclick="abriModal(null)">Crear Nuevo</button>
             </div>
         </div>
         <hr />
@@ -37,7 +37,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-dark text-white">
@@ -45,18 +45,20 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body g-2">
+                <input id="txtid" type="hidden" nvalue="0" />
+
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="txtNombre" class="form-label">Nombres</label>
-                        <input type="text" class="form-control" id="txtNombre" placeholder="Nombres">
+                        <input type="text" class="form-control" id="txtNombre">
                     </div>
                     <div class="col-sm-6">
                         <label for="txtApellidos" class="form-label">Apellidos</label>
-                        <input type="text" class="form-control" id="txtApellidos" placeholder="Apellidos">
+                        <input type="text" class="form-control" id="txtApellidos">
                     </div>
                     <div class="col-sm-6">
                         <label for="txtCorreo" class="form-label">Correo</label>
-                        <input type="email" class="form-control" id="txtCorreo" placeholder="name@example.com">
+                        <input type="email" class="form-control" id="txtCorreo" >
                     </div>
                     <div class="col-sm-6">
                         <label for="cbActivo" class="form-label">Correo</label>
@@ -72,7 +74,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Guardar Cambios</button>
+                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>
             </div>
         </div>
     </div>
@@ -83,6 +85,7 @@
     <script>
 
         var tabladata;
+        var filaSeleccionada;
 
         tabladata = $("#tabla").DataTable({
             responsive: true,
@@ -111,7 +114,7 @@
                     }
                 },
                 {
-                    defaultContent: '<button type="button" class="btn btn-primary btn-sm"><i class="fa fa-pen me-1"></i></button>' +
+                    defaultContent: '<button type="button" class="btn btn-primary btn-sm btn-editar"><i class="fa fa-pen me-1"></i></button>' +
                         '<button type="button" class="btn btn-danger btn-sm ms-2"><i class="fa fa-trash me-1"></i></button>',
                     'orderable': false,
                     'searchable': false,
@@ -124,10 +127,58 @@
             },
         });
 
-        function abriModal() {
+        function abriModal(json) {
+            $("#txtid").val(0);
+            $("#txtNombre").val("");
+            $("#txtApellidos").val("");
+            $("#txtCorreo").val("");
+            $("#cbActivo").val(1);
+
+
+
+            if (json != null) {
+
+                $("#txtid").val(json.IdUsuario);
+                $("#txtNombre").val(json.Nombres);
+                $("#txtApellidos").val(json.Apellidos);
+                $("#txtCorreo").val(json.Correo);
+                $("#cbActivo").val(json.Activo == true ? 1 : 0);
+
+            }
+
             $("#formModal").modal("show");
         }
 
+        $("#tabla tbody").on("click", '.btn-editar', function () {
+
+            filaSeleccionada = $(this).closest("tr");
+
+            var data = tabladata.row(filaSeleccionada).data();
+
+            abriModal(data);
+          
+        })
+
+        function Guardar() {
+
+                var Usuario ={
+                    IdUsuario: $("#txtid").val(),
+                    Activo: $("#cbActivo").val() == 1 ? true : false,
+                    Apellidos: $("#txtApellidos").val(),
+                    Correo: $("#txtCorreo").val(),
+                    Nombres: $("#txtNombre").val()
+
+                }
+
+            if (Usuario.IdUsuario == 0) {
+                tabladata.row.add(Usuario).draw(false);
+
+            } else {
+                tabladata.row(filaSeleccionada).data(Usuario).draw(false);
+            }
+
+            $("#formModal").modal("hide");
+        }
 
     </script>
 
