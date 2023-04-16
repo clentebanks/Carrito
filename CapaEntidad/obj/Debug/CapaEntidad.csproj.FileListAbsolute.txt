@@ -4,3 +4,9 @@ C:\Users\clent\Desktop\SQL SERVER PRACTICE\CARRITO\CursoMvc\CapaEntidad\obj\Debu
 C:\Users\clent\Desktop\SQL SERVER PRACTICE\CARRITO\CursoMvc\CapaEntidad\obj\Debug\CapaEntidad.csproj.CoreCompileInputs.cache
 C:\Users\clent\Desktop\SQL SERVER PRACTICE\CARRITO\CursoMvc\CapaEntidad\obj\Debug\CapaEntidad.dll
 C:\Users\clent\Desktop\SQL SERVER PRACTICE\CARRITO\CursoMvc\CapaEntidad\obj\Debug\CapaEntidad.pdb
+C:\Github\Carrito\CapaEntidad\bin\Debug\CapaEntidad.dll
+C:\Github\Carrito\CapaEntidad\bin\Debug\CapaEntidad.pdb
+C:\Github\Carrito\CapaEntidad\obj\Debug\CapaEntidad.csproj.AssemblyReference.cache
+C:\Github\Carrito\CapaEntidad\obj\Debug\CapaEntidad.csproj.CoreCompileInputs.cache
+C:\Github\Carrito\CapaEntidad\obj\Debug\CapaEntidad.dll
+C:\Github\Carrito\CapaEntidad\obj\Debug\CapaEntidad.pdb

@@ -9,3 +9,14 @@ C:\Users\clent\Desktop\SQL SERVER PRACTICE\CARRITO\CursoMvc\CapaNegocio\obj\Debu
 C:\Users\clent\Desktop\SQL SERVER PRACTICE\CARRITO\CursoMvc\CapaNegocio\obj\Debug\CapaNegocio.csproj.CopyComplete
 C:\Users\clent\Desktop\SQL SERVER PRACTICE\CARRITO\CursoMvc\CapaNegocio\obj\Debug\CapaNegocio.dll
 C:\Users\clent\Desktop\SQL SERVER PRACTICE\CARRITO\CursoMvc\CapaNegocio\obj\Debug\CapaNegocio.pdb
+C:\Github\Carrito\CapaNegocio\bin\Debug\CapaNegocio.dll
+C:\Github\Carrito\CapaNegocio\bin\Debug\CapaNegocio.pdb
+C:\Github\Carrito\CapaNegocio\bin\Debug\CapaDatos.dll
+C:\Github\Carrito\CapaNegocio\bin\Debug\CapaEntidad.dll
+C:\Github\Carrito\CapaNegocio\bin\Debug\CapaDatos.pdb
+C:\Github\Carrito\CapaNegocio\bin\Debug\CapaEntidad.pdb
+C:\Github\Carrito\CapaNegocio\obj\Debug\CapaNegocio.csproj.AssemblyReference.cache
+C:\Github\Carrito\CapaNegocio\obj\Debug\CapaNegocio.csproj.CoreCompileInputs.cache
+C:\Github\Carrito\CapaNegocio\obj\Debug\CapaNegocio.csproj.CopyComplete
+C:\Github\Carrito\CapaNegocio\obj\Debug\CapaNegocio.dll
+C:\Github\Carrito\CapaNegocio\obj\Debug\CapaNegocio.pdb

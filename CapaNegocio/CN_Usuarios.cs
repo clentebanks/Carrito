@@ -28,7 +28,7 @@ namespace CapaNegocio
             }
             else if (string.IsNullOrEmpty(obj.Apellidos) || string.IsNullOrWhiteSpace(obj.Apellidos))
             {
-                Mensaje = "El Apellido del usuario no puede ser vacio"
+                Mensaje = "El Apellido del usuario no puede ser vacio";
             }
             else if(string.IsNullOrEmpty(obj.Correo) || string.IsNullOrWhiteSpace(obj.Correo))
             {
@@ -60,7 +60,7 @@ namespace CapaNegocio
             }
             else if (string.IsNullOrEmpty(obj.Apellidos) || string.IsNullOrWhiteSpace(obj.Apellidos))
             {
-                Mensaje = "El Apellido del usuario no puede ser vacio"
+                Mensaje = "El Apellido del usuario no puede ser vacio";
             }
             else if (string.IsNullOrEmpty(obj.Correo) || string.IsNullOrWhiteSpace(obj.Correo))
             {

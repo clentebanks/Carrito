@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -33,6 +34,21 @@ namespace CapaPresentacionAdmin.Controllers
             return Json(new {data = oLista },JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult GuardarUsuarios(Usuario objeto)
+        {
+            object resultado;
+            string mensaje = string.Empty;
+            if (objeto.IdUsuario == 0)
+            {
+                resultado = new CN_Usuarios().Registrar(objeto, out mensaje);
+            }
+            else
+            {
+                resultado = new CN_Usuarios().Editar(objeto, out mensaje);
+            }
+            return Json(new { resultado = resultado, mensaje}, JsonRequestBehavior.AllowGet);
+        }
 
     }
 }

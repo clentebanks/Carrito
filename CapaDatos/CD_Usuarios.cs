@@ -76,14 +76,16 @@ namespace CapaDatos
 
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
                 {
-                    SqlCommand cmd = new SqlCommand("sp_RegistrarUsusario", oconexion );
-                    cmd.Parameters.AddWithValue( "Nombres", obj.Nombres);
-                    cmd.Parameters.AddWithValue( "Apellidos", obj.Apellidos);
-                    cmd.Parameters.AddWithValue( "Correo", obj.Correo);
-                    cmd.Parameters.AddWithValue( "Clave", obj.Clave);
-                    cmd.Parameters.AddWithValue( "Activo", obj.Activo);
-                    cmd.Parameters.Add( "Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
-                    cmd.Parameters.Add( "Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
+                    SqlCommand cmd = new SqlCommand("sp_RegistrarUsuario", oconexion );
+                    //error Procedure or function 'sp_RegistrarUsuario' expects parameter '@Nombres', which was not supplied.
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure; //colocar esta linea de codigo si no me da error de arriba
+                    cmd.Parameters.AddWithValue("Nombres", obj.Nombres);
+                    cmd.Parameters.AddWithValue("Apellidos", obj.Apellidos);
+                    cmd.Parameters.AddWithValue("Correo", obj.Correo);
+                    cmd.Parameters.AddWithValue("Clave", obj.Clave);
+                    cmd.Parameters.AddWithValue("Activo", obj.Activo);
+                    cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
 
                     oconexion.Open();
                     cmd.ExecuteNonQuery();
@@ -114,6 +116,8 @@ namespace CapaDatos
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
                 {
                     SqlCommand cmd = new SqlCommand("sp_EditarUsuario", oconexion);
+                    //error Procedure or function 'sp_RegistrarUsuario' expects parameter '@Nombres', which was not supplied.
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure; //colocar esta linea de codigo si no me da error de arriba
                     cmd.Parameters.AddWithValue("IdUsuario", obj.IdUsuario);
                     cmd.Parameters.AddWithValue("Nombres", obj.Nombres);
                     cmd.Parameters.AddWithValue("Apellidos", obj.Apellidos);

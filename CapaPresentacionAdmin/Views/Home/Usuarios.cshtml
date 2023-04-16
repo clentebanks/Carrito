@@ -44,21 +44,21 @@
                 <h5 class="modal-title" id="exampleModalLabel">Usuario</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body g-2">
+            <div class="modal-body">
                 <input id="txtid" type="hidden" nvalue="0" />
 
-                <div class="row">
+                <div class="row  g-2">
                     <div class="col-sm-6">
                         <label for="txtNombre" class="form-label">Nombres</label>
-                        <input type="text" class="form-control" id="txtNombre">
+                        <input type="text" class="form-control" id="txtNombre" autocomplete="off">
                     </div>
                     <div class="col-sm-6">
                         <label for="txtApellidos" class="form-label">Apellidos</label>
-                        <input type="text" class="form-control" id="txtApellidos">
+                        <input type="text" class="form-control" id="txtApellidos" autocomplete="off">
                     </div>
                     <div class="col-sm-6">
                         <label for="txtCorreo" class="form-label">Correo</label>
-                        <input type="email" class="form-control" id="txtCorreo" >
+                        <input type="email" class="form-control" id="txtCorreo" autocomplete="off" >
                     </div>
                     <div class="col-sm-6">
                         <label for="cbActivo" class="form-label">Correo</label>
@@ -70,20 +70,28 @@
                     </select>
                     </div>
                 </div>
-                
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <div id="mensajeError" class="alert alert-danger" role="alert">
+                            A simple danger alert—check it out!
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>
             </div>
         </div>
+
+        
+
+
     </div>
 </div>
 
 @section scripts{
-
     <script>
-
         var tabladata;
         var filaSeleccionada;
 
@@ -115,7 +123,7 @@
                 },
                 {
                     defaultContent: '<button type="button" class="btn btn-primary btn-sm btn-editar"><i class="fa fa-pen me-1"></i></button>' +
-                        '<button type="button" class="btn btn-danger btn-sm ms-2"><i class="fa fa-trash me-1"></i></button>',
+                        '<button type="button" class="btn btn-danger btn-sm ms-2 btn-eliminar"><i class="fa fa-trash me-1"></i></button>',
                     'orderable': false,
                     'searchable': false,
                     'width':'90px'
@@ -133,6 +141,9 @@
             $("#txtApellidos").val("");
             $("#txtCorreo").val("");
             $("#cbActivo").val(1);
+
+
+            $("#mensajeError").hide();
 
 
 
@@ -159,6 +170,17 @@
           
         })
 
+
+        $("#tabla tbody").on("click", '.btn-eliminar', function () {
+
+            var usuarioSeleccionada = $(this).closest("tr");
+
+            var data = tabladata.row(usuarioSeleccionada).data();
+
+            abriModal(data);
+
+        })
+
         function Guardar() {
 
                 var Usuario ={
@@ -170,14 +192,61 @@
 
                 }
 
-            if (Usuario.IdUsuario == 0) {
-                tabladata.row.add(Usuario).draw(false);
+            jQuery.ajax({
+                url: '@Url.Action("GuardarUsuarios", "Home")',
+                type: "POST",
+                data: JSON.stringify({objeto : Usuario}),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    // Here we might call the "hide" action 2 times, or simply set the "force" parameter to true:
+                    $(".modal-body").LoadingOverlay("hide", true);
+                    //usuario nuevo
+                    if (Usuario.IdUsuario == 0) {
 
-            } else {
-                tabladata.row(filaSeleccionada).data(Usuario).draw(false);
-            }
+                        if (data.resultado != 0) {
+                            Usuario.IdUsuario = data.resultado;
+                            tabladata.row.add(Usuario).draw(false);
+                            $("#formModal").modal("hide");
 
-            $("#formModal").modal("hide");
+                        }
+                        else {
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+                        }
+                    }
+                     //usuario editar
+                    else {
+                        if (data.resultado) {
+                            tabladata.row(filaSeleccionada).data(Usuario).draw(false);
+                            filaSeleccionada = null;
+                            $("#formModal").modal("hide");
+                        }
+                        else {
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+                        }
+                    }
+                },
+                error: function (error) {
+                    // Here we might call the "hide" action 2 times, or simply set the "force" parameter to true:
+                    $(".modal-body").LoadingOverlay("hide", true);
+                    $("#mensajeError").text("Error Ajax");
+                    $("#mensajeError").show();
+                },
+                beforeSend: function () {
+                    $(".modal-body").LoadingOverlay("show", {
+                        imageResizeFactor: 2,
+                        text: "Cargando...",
+                        size:14
+                    })
+                    
+                }
+            })
+
+
+    
+            
         }
 
     </script>
