@@ -9,6 +9,14 @@ namespace CapaNegocio
 {
     public class CN_Recursos
     {
+
+        public static string GenerarClave (){
+
+            string clave = Guid.NewGuid().ToString("N").Substring(0, 6);
+
+
+        }
+
         //encriptacio del TEXTO en SHA256
 
         public static string ConvertirSha256(string texto)
