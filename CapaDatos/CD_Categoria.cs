@@ -73,7 +73,7 @@ namespace CapaDatos
                 {
                     SqlCommand cmd = new SqlCommand("sp_RegistrarCategoria", oconexion);
                     //error Procedure or function 'sp_RegistrarUsuario' expects parameter '@Nombres', which was not supplied.
-                    cmd.Parameters.AddWithValue("Descrpcion", obj.Descripcion);
+                    cmd.Parameters.AddWithValue("Descripcion", obj.Descripcion);
                     cmd.Parameters.AddWithValue("Activo", obj.Activo);
                     cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -109,7 +109,8 @@ namespace CapaDatos
                 {
                     SqlCommand cmd = new SqlCommand("sp_EditarCategoria", oconexion);
                     //error Procedure or function 'sp_RegistrarUsuario' expects parameter '@Nombres', which was not supplied.
-                    cmd.Parameters.AddWithValue("Descrpcion", obj.Descripcion);
+                    cmd.Parameters.AddWithValue("IdCategoria", obj.IdCategoria);
+                    cmd.Parameters.AddWithValue("Descripcion", obj.Descripcion);
                     cmd.Parameters.AddWithValue("Activo", obj.Activo);
                     cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
