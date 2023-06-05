@@ -4,5 +4,343 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Productos</h2>
+
+<ol class="breadcrumb mb-4 mt-4">
+    <li class="breadcrumb-item"><a href="index.html">Mantenimiento</a></li>
+    <li class="breadcrumb-item active">Productos</li>
+</ol>
+
+<div class="card">
+    <div class="card-header"> <i class="fa fa-boxes me-1"></i> Lista de Productos </div>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <button type="button" class="btn btn-success" onclick="abriModal(null)">Crear Nuevo</button>
+            </div>
+        </div>
+        <hr />
+        <table id="tabla" class="display cell-border " style="width:100%">
+            <thead>
+                <tr>
+
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                    <th>Marca</th>
+                    <th>Categoria</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Activo</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title" id="exampleModalLabel">Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input id="txtid" nvalue="0" />
+
+                <form id="contnedor" class="row">
+
+                    <div class="col-sm-3">
+                        <div class="mb-2">
+                            <img src="#" alt="Alternate Text" id="img_producto" height="197" width="200" class="border rounded mx-auto d-block img-fluid" />
+                        </div>
+                        <div class="mb-2">
+                            <input class="form-control" type="file" id="file_producto" accept="image/png, image/jpg, image/jpeg" onchange="mostrarImagen(this)" />
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-control" name="nombre" id="txtNombre" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Descrpcion</label>
+                            <textarea type="text" class="form-control" name="descripcion" id="txtDescripsion" style="height:125px;resize:none">
+
+                            </textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="mb-3">
+                            <label class="form-label">Marca</label>
+                            <select id="cboMarca" class="form-select">
+                                <option value="value">text</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Categoria</label>
+                            <select id="cboCategoria" class="form-select">
+                                <option value="value">text</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Precio</label>
+                            <input type="text" id="txtprecio" name="precio" autocomplete="off" />
+                        </div>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="mb-3">
+                            <label class="form-label">Stock</label>
+                            <input type="number" class="form-control" name="stock" id="txtstock" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Activo</label>
+                            <select id="cboActivo" class="form-select">
+                                <option value="1">Si</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+
+                <!--MENSAJE ERROR-->
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <div id="mensajeError" class="alert alert-danger" role="alert">
+                            A simple danger alert—check it out!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        var tabladata;
+        var filaSeleccionada;
+        //funcion nuestra la imagen que se carga o selecciona
+        function mostrarImagen(input) {
+            if (input.files) {
+
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $("#img_producto").attr("src", e.target.result).width(200).height(197);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+
+            }
+
+        }
+
+
+
+
+        tabladata = $("#tabla").DataTable({
+            responsive: true,
+            ordering: false,
+            "ajax": {
+                url: '@Url.Action("ListarProducto", "Mantenedor")',
+                type: "GET",
+                dataType: "json",
+
+            },
+            columns: [
+
+                {data:'Descripcion'},
+                {
+                   data:'Activo','render': function(valor){
+                        if (valor) {
+                            return '<span class="badge bg-success">Si</span>'
+
+                        }
+                        else {
+                            return '<span class="badge bg-danger">No</span>'
+                        }
+
+                    }
+                },
+                {
+                    defaultContent: '<button type="button" class="btn btn-primary btn-sm btn-editar"><i class="fa fa-pen me-1"></i></button>' +
+                        '<button type="button" class="btn btn-danger btn-sm ms-2 btn-eliminar"><i class="fa fa-trash me-1"></i></button>',
+                        'orderable': false,
+                        'searchable': false,
+                        'width':'90px'
+
+                }
+            ],
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+            },
+        });
+
+
+
+
+
+        function abriModal(json) {
+            $("#txtid").val(0);
+            $("#txtDescripcion").val("");
+            $("#cbActivo").val(1);
+
+            $("#mensajeError").hide();
+
+            if (json != null) {
+
+                $("#txtid").val(json.IdMarca);
+                $("#txtDescripcion").val(json.Descripcion);
+                $("#cbActivo").val(json.Activo == true ? 1 : 0);
+
+            }
+
+            $("#formModal").modal("show");
+        }
+
+        $("#tabla tbody").on("click", '.btn-editar', function () {
+
+            filaSeleccionada = $(this).closest("tr");
+
+            var data = tabladata.row(filaSeleccionada).data();
+
+            abriModal(data);
+
+        })
+
+
+        $("#tabla tbody").on("click", '.btn-eliminar', function () {
+
+            var marcaSeleccionada = $(this).closest("tr");
+
+            var data = tabladata.row(marcaSeleccionada).data();
+
+
+            swal({
+                title: "Esta Seguro?",
+                text: "Desea eliminar la Marca?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Si",
+                cancelButtonText: "No",
+                closeOnConfirm: true
+            },
+
+                function(){
+                    jQuery.ajax({
+                       url: '@Url.Action("EliminarMarca", "Mantenedor")',
+                       type:"POST",
+                       data: JSON.stringify({ id: data.IdMarca }),
+                       dataType:"json",
+                       contentType:"application/json; charset=utf-8",
+                        success: function (data) {
+
+                            if (data.resultado) {
+                                tabladata.row(marcaSeleccionada).remove().draw();
+                            }else{
+                                swal("No se pudo eliminar", data.mensaje,"error")
+                            }
+                        },
+                        error:function(error) {
+                            console.log(error)
+
+                        },
+
+                    })
+
+                });
+
+        })
+
+        function Guardar() {
+
+                var Marca ={
+                    IdMarca: $("#txtid").val(),
+                    Descripcion: $("#txtDescripcion").val(),
+                    Activo: $("#cbActivo").val() == 1 ? true : false,
+
+
+                }
+
+            jQuery.ajax({
+                url: '@Url.Action("GuardarMarca", "Mantenedor")',
+                type: "POST",
+                data: JSON.stringify({ objeto: Marca}),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    // Here we might call the "hide" action 2 times, or simply set the "force" parameter to true:
+                    $(".modal-body").LoadingOverlay("hide", true);
+                    //Categoria nuevo
+                    if (Marca.IdMarca == 0) {
+
+                        if (data.resultado != 0) {
+                            Marca.IdMarca = data.resultado;
+                            tabladata.row.add(Marca).draw(false);
+                            $("#formModal").modal("hide");
+
+                        }
+                        else {
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+                        }
+                    }
+                     //Categoria editar
+                    else {
+                        if (data.resultado) {
+                            tabladata.row(filaSeleccionada).data(Marca).draw(false);
+                            filaSeleccionada = null;
+                            $("#formModal").modal("hide");
+                        }
+                        else {
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+                        }
+                    }
+                },
+                error: function (error) {
+                    // Here we might call the "hide" action 2 times, or simply set the "force" parameter to true:
+                    $(".modal-body").LoadingOverlay("hide", true);
+                    $("#mensajeError").text("Error Ajax");
+                    $("#mensajeError").show();
+                },
+                beforeSend: function () {
+                    $(".modal-body").LoadingOverlay("show", {
+                        imageResizeFactor: 2,
+                        text: "Cargando...",
+                        size:14
+                    })
+
+                }
+            })
+
+
+
+
+        }
+
+    </script>
+
+}
+
+
+
 
